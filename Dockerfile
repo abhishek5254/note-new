@@ -4,7 +4,7 @@ FROM maven:3.8.5-openjdk-11 AS builder
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the Maven project files
+# Copy the Maven project files from the subdirectory
 COPY pom.xml .
 COPY src ./src
 
@@ -21,4 +21,4 @@ RUN rm -rf /usr/local/tomcat/webapps/ROOT
 COPY --from=builder /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 
 # Expose the default Tomcat port
-EXPOSE 8080
+EXPOSE 8081
