@@ -2,13 +2,13 @@ pipeline {
     agent any // Or specify a particular agent if required
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
-        IMAGE_NAME = "abhishek7380/my-java-webapp"
+        IMAGE_NAME = "abhishek7380/note-taker-webapp"
     }
    
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/abhishek5254/Crud_Application.git'
+                git branch: 'main', url: 'https://github.com/abhishek5254/Note.git'
             }
         }
         stage('Build Java Application') {
