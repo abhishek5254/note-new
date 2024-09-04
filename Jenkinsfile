@@ -2,7 +2,7 @@ pipeline {
     agent any // Or specify a particular agent if required
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
-        IMAGE_NAME = "abhishek7380/note-taker-webapp"
+        IMAGE_NAME = "abhishek7380/notetaker-webapp"
     }
    
     stages {
