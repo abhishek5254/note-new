@@ -15,7 +15,7 @@
 	<div class="container-fluid p-0 m-0">
 		<%@include file="navbar.jsp"%>
 
-		<h1 class="text-center mt-4">This is Note  home page</h1>
+		<h1 class="text-center mt-4">This is to check jenkins integration on home page</h1>
 	</div>
 
 
