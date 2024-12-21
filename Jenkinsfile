@@ -1,42 +1,32 @@
 pipeline {
-    agent any // Or specify a particular agent if required
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials-id')
-        IMAGE_NAME = "abhishek7380/notetaker-application"
-    }
-   
-    stages {
-        stage('Clone Repository') {
-            steps {
-                git branch: 'main', url: 'https://github.com/abhishek5254/Note.git'
-            }
-        }
-        stage('Build Java Application') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    app = docker.build("${IMAGE_NAME}:${env.BUILD_NUMBER}", "-f Dockerfile .")
+  agent { label 'jenkins-Agent' }
+  tools {
+    jdk 'Java17'
+    maven 'Maven3'
+  }
+  stages{
+    stage("Cleanup Workspace"){
+                steps {
+                cleanWs()
                 }
-            }
         }
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKERHUB_CREDENTIALS) {
-                        app.push("${env.BUILD_NUMBER}")
-                        app.push("latest")
-                    }
+
+        stage("Checkout from SCM"){
+                steps {
+                    git branch: 'master', credentialsId: 'github', url: 'https://github.com/abhishek5254/note-new.git'
                 }
+        }
+    stage("Build Application"){
+            steps {
+                sh "mvn clean package"
             }
-        }
-    }
-    post {
-        always {
-            cleanWs() // Clean workspace
-        }
-    }
+       }
+    stage("Test Application"){
+           steps {
+                 sh "mvn test"
+           }
+       }
+    
+
+  }
 }
